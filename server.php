@@ -47,6 +47,7 @@ curl_setopt(
 $ret = curl_exec( $ch );
 
 if ( $ret !== 'true' ){
+  
   die;
 }
 
