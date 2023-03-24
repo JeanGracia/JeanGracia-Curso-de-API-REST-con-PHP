@@ -41,7 +41,7 @@ curl -X 'DELETE' http://localhost:8000/books/1 | jq
 curl http://localhost:8000/books -H 'X-HASH: ec03576900aeb74143569c9b5b39b75706241ccf' -H 'X-UID: 1' -H 'X-TIMESTAMP: 1679673901' | JQ
 
 Solicitar al servidor de autenticacion un token valido
-curl http://localhost:8001 -X 'POST' -H 'X-Client-Id. 1' -H 'X-Secret:SuperSecreto!'
+curl http://localhost:8001 -X 'POST' -H 'X-Client-Id: 1' -H 'X-Secret:SuperSecreto!'
 
 general una segunda llamada al servidor de recursos
 curl http://localhost:8000/books -H 'X-Token: '
