@@ -1,28 +1,5 @@
 <?php
 
-/*Autenticación vía hash
-if (
-    !array_key_exists('HTTP_X_HASH', $_SERVER) ||
-    !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
-    !array_key_exists('HTTP_X_UID', $_SERVER)
-){
-  die;
-}
-
-list( $hash, $uid, $timestamp ) = [
-    $_SERVER['HTTP_X_HASH'],
-    $_SERVER['HTTP_X_UID'],
-    $_SERVER['HTTP_X_TIMESTAMP']
-];
-
-$secret = 'Sh!! No se lo cuentes a nadie!';
-
-$newHash = sha1($uid.$timestamp.$secret);
-
-if ( $newHash !== $hash ) {
-  die;
-}*/
-
 if( !array_key_exists ( 'HTTP_X_TOKEN', $_SERVER ) ) {
 
   die;
@@ -47,7 +24,7 @@ curl_setopt(
 $ret = curl_exec( $ch );
 
 if ( $ret !== 'true' ){
-  
+
   die;
 }
 
