@@ -1,0 +1,34 @@
+- Una API REST es una forma de permitir que diferentes programas de ordenador se comuniquen entre sí a través de Internet. Ya que la comunicación debe darse a través de protocolos y estándares para enviar y recibir datos, estas APIs están diseñadas bajo los principios de REST (que significa Representational State Transfer) y son útiles para interacciones simples.
+
+En otras palabras, son el puente de comunicación entre frontend y backend.
+
+Principios de una API REST (API RESTful)
+Una API RESTful es una interfaz que utiliza los principios de REST para comunicarse hacia y desde un servidor.
+
+
+|-------------------------------------------------------------------------------
+| El principio más importante en las APIs RESTful es el uso de los métodos HTTP:
+|-------------------------------------------------------------------------------
+|Verbos HTTP
+|
+| get    | Consulta
+| post   | Guarda
+| delete | Elimina
+| put    | Actualiza
+
+Estos métodos son empleados por los clientes para crear, manipular y eliminar datos en los servidores, respectivamente.
+
+- Elementos de una API REST o API RESTful
+Para que una API sea REST esta debe de funcionar bajo tres conceptos:
+
+Recurso: todo dentro de una API RESTful debe ser un recurso.
+URI: los recursos en REST siempre se manipulan a partir de la URI, identificadores universales de recursos.
+Acción: todas las peticiones a tu API RESTful deben estar asociadas a uno de los verbos de HTTP: GET para obtener un recurso, POST para escribir un recurso, PUT para modificar un recurso y DELETE para borrarlo.
+
+- Qué es REST
+REST es un estilo de arquitectura de software enfocado en el intercambio de recursos y basado en HTTP. Le agrega una capa muy delgada de complejidad y abstracción a HTTP. Mientras que HTTP es transferencia de archivos, REST se basa en la transferencia de recursos.
+
+- Cómo funciona REST
+REST es un conjunto de principios que definen la forma en que se deben crear, leer, actualizar y eliminar los datos. Es una arquitectura conocida como cliente-servidor, en la que el servidor y el cliente actúan de forma independiente, siempre y cuando la interfaz sea la misma al procesar una solicitud y una respuesta, que son los elementos esenciales.
+
+El servidor expone la API REST y el cliente hace uso de ella. El servidor almacena la información y la pone a disposición del usuario, mientras que el cliente toma la información y la muestra al usuario o la utiliza para realizar posteriores peticiones de más información.

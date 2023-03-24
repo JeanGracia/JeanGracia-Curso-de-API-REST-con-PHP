@@ -1,0 +1,47 @@
+cliente = curl
+
+levantar servidor 
+php -S localhost:8000 server.php
+
+levantar servidor URL's amigables
+php -S localhost:8000 router.php
+
+Consultar server
+curl http://localhost:8000 -v
+
+Ver comunicación a nivel de encabezado 
+curl http://localhost:8000?resource_type=books -v > null
+
+- Peticiones de consulta al server mediante el METODO GET 
+
+la respuesta es un JSON que contiene toda la coleccion de libros
+curl http://localhost:8000?resource_type=books | jq    //jq es una herramienta para darle formato al JSON
+
+evuelve 1 recurso en particular (desde server.php) 
+curl "http://localhost:8000?resource_type=books&resource_id=1" | jq
+
+Para ver el contenido del array desde una URL amigable (desde router.php)
+curl http://localhost:8000/books | jq
+
+Para ver la informacion de un registro especifico desde una URL amigable (desde router.php)
+curl  http://localhost:8000/books/1
+
+- Incorporar datos a través del METODO POST
+curl -X 'POST' http://localhost:8000/books -d '{ "titulo": "Nuevo Libro", "id_autor": 1, "id_genero": 2 }'
+
+- Modificar datos a través del METODO PUT 
+curl -X 'PUT' http://localhost:8000/books/1 -d '{ "titulo": "Nuevo libro", "id_autor":1, "id_genero":2 }'
+
+"el método PUT hace un reemplazo, no modificaciones puntuales. Por ello la información que enviemos a través de la petición debe ser completa."
+
+- Eliminar datos a través del METODO DELETE
+curl -X 'DELETE' http://localhost:8000/books/1 | jq
+
+- Autenticación vía hash
+curl http://localhost:8000/books -H 'X-HASH: ec03576900aeb74143569c9b5b39b75706241ccf' -H 'X-UID: 1' -H 'X-TIMESTAMP: 1679673901' | JQ
+
+Solicitar al servidor de autenticacion un token valido
+curl http://localhost:8001 -X 'POST' -H 'X-Client-Id. 1' -H 'X-Secret:SuperSecreto!'
+
+general una segunda llamada al servidor de recursos
+curl http://localhost:8000/books -H 'X-Token: '
