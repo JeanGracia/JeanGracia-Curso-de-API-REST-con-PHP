@@ -1,7 +1,7 @@
 cliente = curl
 
 levantar servidor 
-php -S localhost:8000 server.php
+php -S localhost:8000 server.php/router.php/auth.server.php
 
 levantar servidor URL's amigables
 php -S localhost:8000 router.php
@@ -40,7 +40,7 @@ curl -X 'DELETE' http://localhost:8000/books/1 | jq
 - Autenticación vía hash
 curl http://localhost:8000/books -H 'X-HASH: ec03576900aeb74143569c9b5b39b75706241ccf' -H 'X-UID: 1' -H 'X-TIMESTAMP: 1679673901' | JQ
 
-Solicitar al servidor de autenticacion un token valido
+Solicitar al servidor de autenticacion un token valido (desde router.php && auth.server.php )
 curl http://localhost:8001 -X 'POST' -H 'X-Client-Id: 1' -H 'X-Secret:SuperSecreto!'
 
 general una segunda llamada al servidor de recursos
