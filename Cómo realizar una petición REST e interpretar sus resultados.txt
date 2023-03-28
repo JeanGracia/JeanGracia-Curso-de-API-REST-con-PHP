@@ -1,7 +1,8 @@
 cliente = curl
 
 levantar servidor 
-php -S localhost:8000 server.php/router.php/auth.server.php
+php -S localhost:8000 server.php/router.php
+php -S localhost:8001 auth_server.php
 
 levantar servidor URL's amigables
 php -S localhost:8000 router.php
@@ -11,6 +12,8 @@ curl http://localhost:8000 -v
 
 Ver comunicación a nivel de encabezado 
 curl http://localhost:8000?resource_type=books -v > null
+
+curl -v http://localhost:8000/books -v
 
 - Peticiones de consulta al server mediante el METODO GET 
 
@@ -45,3 +48,21 @@ curl http://localhost:8001 -X 'POST' -H 'X-Client-Id: 1' -H 'X-Secret:SuperSecre
 
 general una segunda llamada al servidor de recursos
 curl http://localhost:8000/books -H 'X-Token: '
+
+Los códigos de error más útilizados en las API REST son:
+
+200 OK (GET, POST, PUT):La solicitud ha tenido éxito.
+
+201 Created (POST, PUT): La solicitud ha tenido éxito y se ha creado un nuevo recurso como resultado de ello.
+
+301 Moved Permanently (GET, POST, PUT, PATH, DELETE): Este código de respuesta significa que la URI del recurso solicitado ha sido cambiado. Probablemente una nueva URI sea devuelta en la respuesta.
+
+401 Unauthorized (GET, POST, PUT, PATH, DELETE): Es necesario autenticar para obtener la respuesta solicitada. Esta es similar a 403, pero en este caso, autenticación es posible.
+
+404 Not Found (GET, POST, PUT, PATH, DELETE): El servidor no pudo encontrar el contenido solicitado. Este código de respuesta es uno de los más famosos dada su alta ocurrencia en la web.
+
+405 Method Not Allowed (GET, POST, PUT, PATH, DELETE): El método solicitado es conocido por el servidor pero ha sido deshabilitado y no puede ser utilizado.
+
+500 Internal Server Error (GET, POST, PUT, PATH, DELETE): El servidor ha encontrado una situación que no sabe como manejarla.
+
+Más sobre mensajes de error en: Códigos de estado de respuesta HTTP

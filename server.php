@@ -1,9 +1,11 @@
 <?php
 
+/*Validacion por token
 if( !array_key_exists ( 'HTTP_X_TOKEN', $_SERVER ) ) {
 
   die;
 }
+
 
 $url = 'http://localhost:8001';
 
@@ -26,7 +28,7 @@ $ret = curl_exec( $ch );
 if ( $ret !== 'true' ){
 
   die;
-}
+}*/
 
 //Avisamos al cliente que le vamos a estar enviando JSON
 header('Content-Type: application/json');
@@ -40,8 +42,11 @@ $allowedResourceTypes = [
 
 //Validamos que el recurso este disponible
 $resourceType = $_GET['resource_type'];
+
 if (!in_array($resourceType, $allowedResourceTypes)) {
-    die;
+  http_response_code(400);
+
+  die;
 }
 
 //Definimos los recursos 
@@ -66,45 +71,52 @@ $books = [
 /*Levantamos el ID del recurso buscado
 $resourceId: variable que deberia venir desde la URL
 array_key_exists: validador de PHP para saber si la peticion del ID CORRESPONDE al contenido del array*/
-$resourceId = array_key_exists('resource_id', $_GET) ? $_GET['resource_id'] : ''; 
+$resourceId = array_key_exists('resource_id', $_GET) ? $_GET['resource_id'] : '';
 $method = $_SERVER['REQUEST_METHOD'];
 
 //Generamos la respuesta asumiendo que el pedido es correcto
 switch ( strtoupper($_SERVER['REQUEST_METHOD']) ) {
   case 'GET': //Peticiones al server
-    if ( empty( $resourceId ) ) {
-        echo json_encode( $books ); //para toda la coleccion
-    } else {
-        if ( array_key_exists( $resourceId, $books ) ) { //para registros especificos
-            echo json_encode( $books[ $resourceId ] );
-        }
-    }
-  break;
+            if ( !empty( $resourceId ) ) {
+              /*echo json_encode($books); //para toda la coleccion
+            } else {*/
+              if ( array_key_exists( $resourceId, $books ) ) { //para registros especificos
+                      echo json_encode(
+
+                                      $books[$resourceId]
+
+                                      );
+              } else {
+                      
+                      http_response_code(404); //Not Found
+              }
+            }
+            break;
   case 'POST': //con esto permitimos que una entidad externa cree un nuevo libro
-    
+
     //Tomamos la entrada "cruda" el usuario nos envia un texto con la misma estructura de nuestro array en formato JSON
-    $json = file_get_contents('php://input'); 
-    
+    $json = file_get_contents('php://input');
+
     //Transformamos el json recibido a un nuevo elemento del array
     $books[] = json_decode($json, true); //true para decir que esto se haga en forma de array
-    
+
     /*Devolvemos el ID que se a generado para el nuevo elemento (libro) dentro del array
     echo array_keys( $books )[ count($books) - 1 ];*/
 
-    echo json_encode( $books );
+    echo json_encode($books);
     break;
   case 'PUT':
     /*Validaciones
     $resourceId: valida que el parametro no este vacio
     array_key_exists: valida que el ID corresponda a uno dentro del array con el cual contamos*/
     if (!empty($resourceId) && array_key_exists($resourceId, $books)) {
-      
+
       //Tomamos la entrada cruda
       $json = file_get_contents('php://input');
-      
+
       //La clave que recibimos nos dira cual sera el recurso a reemplazar
       $books[$resourceId] = json_decode($json, true);
-      
+
       //retornamos la coleccion completa con la ultima modificacion
       echo json_encode($books);
     }
@@ -113,13 +125,13 @@ switch ( strtoupper($_SERVER['REQUEST_METHOD']) ) {
     /*Validaciones
     $resourceId: valida que el parametro no este vacio
     array_key_exists: valida que el ID corresponda a uno dentro del array con el cual contamos*/
-    if (!empty($resourceId) && array_key_exists($resourceId, $books)) { 
+    if (!empty($resourceId) && array_key_exists($resourceId, $books)) {
       unset($books[$resourceId]); //funcion para eliminar el elemento del array
 
       //Tomamos la entrada cruda
       $json = file_get_contents('php://input');
     }
-    
+
     echo json_encode($books);
     break;
 }
